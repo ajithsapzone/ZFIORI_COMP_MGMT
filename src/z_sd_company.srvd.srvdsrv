@@ -1,0 +1,5 @@
+@EndUserText.label: 'Service Definition for Comp&Empl Mgmt'
+define service Z_SD_COMPANY {
+  expose Z_C_COMPANY   as Companydata;
+  expose Z_C_EMPLOYEES as Employeesdata;
+}
