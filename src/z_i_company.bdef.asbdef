@@ -1,0 +1,84 @@
+managed implementation in class zbp_i_company unique;
+strict ( 2 );
+
+with draft;
+define behavior for Z_I_COMPANY //alias <alias_name>
+persistent table zcompany_db
+draft table zcompany_dt
+lock master
+total etag lastchangesat
+authorization master ( instance )
+//etag master <field_name>
+{
+  create ( authorization : global );
+  update;
+  delete;
+  field ( readonly ) Lastchangedby, Lastchangesat;
+//  field ( readonly : update ) CompanyId;
+
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Resume;
+  draft action Discard;
+  draft determine action Prepare;
+
+  association _employees { create; with draft; }
+
+  validation checknobranch on save { create; field Nobranch; }
+  determination overloginstatus on save {create;}
+
+  action setallpresent;
+
+  mapping for zcompany_db
+    {
+      CompanyId       = company_id;
+      CompanyName     = company_name;
+      Resgno          = resgno;
+      Industry        = industry;
+      Nobranch        = nobranch;
+      Country         = country;
+      overloginstatus = overloginstatus;
+      Createdat       = createdat;
+      Createdby       = createdby;
+      Lastchangesat   = Lastchangesat;
+      Lastchangedby   = lastchangedby;
+    }
+}
+
+
+define behavior for Z_I_EMPLOYEES //alias <alias_name>
+persistent table zemployee_db
+lock dependent by _company
+authorization dependent by _company
+draft table zemployee_dt
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly ) CompanyId;
+  field ( readonly : update ) EmployeeId;
+
+  association _company { with draft; }
+
+  validation empjoiningdate on save { create; field Joiningdate; }
+  determination overallstatus on save { create; update; }
+
+  mapping for zemployee_db
+    {
+      CompanyId     = company_id;
+      employeeid    = Employee_Id;
+      employeename  = Employeename;
+      gender        = Gender;
+      designation   = Designation;
+      Currency      = currency;
+      salary        = Salary;
+      mobileno      = Mobileno;
+      loginstatus   = loginstatus;
+      Joiningdate   = Joiningdate;
+      Createdat     = createdat;
+      Createdby     = createdby;
+      Lastchangesat = Lastchangesat;
+      Lastchangedby = lastchangedby;
+    }
+}
