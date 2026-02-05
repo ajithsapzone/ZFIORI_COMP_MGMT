@@ -1,6 +1,7 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Projection View for Z_I_COMPANY'
 @Metadata.ignorePropagatedAnnotations: true
+@Search.searchable: true
 
 @UI.headerInfo: {
   typeName: 'Company Details',
@@ -30,12 +31,18 @@ define root view entity Z_C_COMPANY
 
       @UI.lineItem: [{ position: 10, label: 'Company Id' }]
       @UI.identification: [{ position: 10, label: 'Company Id' }]
+      @Search.defaultSearchElement: true
+      @Search.fuzzinessThreshold: 0.8
   key CompanyId,
       @UI.lineItem: [{ position: 20, label: 'Company Name' }]
       @UI.identification: [{ position: 20, label: 'Company Name' }]
+      @Search.defaultSearchElement: true
+      @Search.fuzzinessThreshold: 0.8
       CompanyName,
       @UI.lineItem: [{ position: 30, label: 'Resigter No' }]
       @UI.identification: [{ position: 30, label: 'Resigter No' }]
+      @Search.defaultSearchElement: true
+      @Search.fuzzinessThreshold: 0.8
       Resgno,
       @UI.lineItem: [{ position: 40, label: 'Industry' }]
       @UI.identification: [{ position: 40, label: 'Industry' }]
